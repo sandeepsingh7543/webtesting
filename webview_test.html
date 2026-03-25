@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebView Navigation Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 400px; margin: auto; }
+    h2 { margin-bottom: 8px; }
+    .group { margin-bottom: 24px; }
+    a { display: block; padding: 10px 14px; margin: 6px 0; border-radius: 8px;
+        text-decoration: none; color: white; font-size: 15px; }
+    .red    { background: #e74c3c; }
+    .blue   { background: #2980b9; }
+    .green  { background: #27ae60; }
+    .orange { background: #e67e22; }
+  </style>
+</head>
+<body>
+
+  <h2>🔴 Error Scheme (triggers onLoadFailure)</h2>
+  <div class="group">
+    <a class="red" href="error://something">error://something</a>
+  </div>
+
+  <h2>📱 SMS Scheme (opens externally → onLoadFailure)</h2>
+  <div class="group">
+    <a class="orange" href="sms:+1234567890">sms:+1234567890</a>
+  </div>
+
+  <h2>📞 Other Non-HTTP Schemes</h2>
+  <div class="group">
+    <a class="orange" href="tel:+1234567890">tel:+1234567890</a>
+    <a class="orange" href="mailto:test@example.com">mailto:test@example.com</a>
+    <a class="orange" href="maps://?q=New+York">maps://New York</a>
+  </div>
+
+  <h2>✅ HTTP/HTTPS (allowed, triggers onLoadSuccess)</h2>
+  <div class="group">
+    <a class="green" href="https://example.com">https://example.com</a>
+    <a class="blue"  href="http://example.com">http://example.com</a>
+  </div>
+
+</body>
+</html>
