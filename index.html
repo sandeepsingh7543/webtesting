@@ -3,51 +3,306 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebView Navigation Test</title>
+  <title>WebView Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 400px; margin: auto; }
-    h2 { margin-bottom: 8px; }
-    .group { margin-bottom: 24px; }
-    a { display: block; padding: 10px 14px; margin: 6px 0; border-radius: 8px;
-        text-decoration: none; color: white; font-size: 15px; }
-    .red    { background: #e74c3c; }
-    .blue   { background: #2980b9; }
-    .green  { background: #27ae60; }
-    .orange { background: #e67e22; }
-    .purple { background: #8e44ad; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #fafafa;
+      color: #1d1d1f;
+      padding: 20px 16px 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* Header - simple and clean */
+    .page-header {
+      padding: 28px 0 24px;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1d1d1f;
+      margin-bottom: 4px;
+    }
+
+    .page-header p {
+      font-size: 13px;
+      color: #86868b;
+    }
+
+    /* Sections */
+    .group {
+      margin-bottom: 24px;
+    }
+
+    .group-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding: 0 2px;
+    }
+
+    .group-label h2 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1d1d1f;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .tag-red { background: #fee2e2; color: #dc2626; }
+    .tag-amber { background: #fef3c7; color: #d97706; }
+    .tag-violet { background: #ede9fe; color: #7c3aed; }
+    .tag-green { background: #dcfce7; color: #16a34a; }
+
+    /* Card container */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e5e5e5;
+      overflow: hidden;
+    }
+
+    /* Link rows */
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: #1d1d1f;
+      transition: background 0.15s ease;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .row:active {
+      background: #f5f5f7;
+    }
+
+    /* Icon dot */
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-amber { background: #f59e0b; }
+    .dot-violet { background: #8b5cf6; }
+    .dot-blue { background: #3b82f6; }
+    .dot-cyan { background: #06b6d4; }
+    .dot-purple { background: #a855f7; }
+    .dot-green { background: #22c55e; }
+
+    /* Row content */
+    .row-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .row-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 1px;
+    }
+
+    .row-sub {
+      font-size: 11px;
+      color: #86868b;
+      font-family: 'SF Mono', ui-monospace, monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chevron {
+      color: #c7c7cc;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 20px 0 0;
+      font-size: 11px;
+      color: #aeaeb2;
+    }
   </style>
 </head>
 <body>
 
-  <h2>🔴 Error Scheme (triggers onLoadFailure)</h2>
-  <div class="group">
-    <a class="red" href="error://something">error://something</a>
+<div class="wrap">
+  <div class="page-header">
+    <h1>WebView Test</h1>
+    <p>URL scheme handling & navigation callbacks</p>
   </div>
 
-  <h2>📱 SMS Scheme (opens externally → onLoadFailure)</h2>
+  <!-- Error -->
   <div class="group">
-    <a class="orange" href="sms:81063&body=IQB%20Q08%20777212244%20Je%20veux%20des%20informations%20d%C3%A9taill%C3%A9es!">Send SMS</a>
+    <div class="group-label">
+      <h2>Error Scheme</h2>
+      <span class="tag tag-red">Failure</span>
+    </div>
+    <div class="card">
+      <a class="row" href="error://something">
+        <span class="dot dot-red"></span>
+        <div class="row-text">
+          <div class="row-title">Trigger Error</div>
+          <div class="row-sub">error://something</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+    </div>
   </div>
 
-  <h2>💳 UPI Payment (opens UPI app)</h2>
+  <!-- SMS -->
   <div class="group">
-    <a class="purple" href="upi://pay?pa=test@ybl&pn=TestMerchant&am=1.00&cu=INR&tn=TestPayment">UPI Pay ₹1 (Basic)</a>
-    <a class="purple" href="upi://pay?pa=merchant@paytm&pn=ShopName&am=10.00&cu=INR&tn=OrderPayment&tr=TXN123456">UPI Pay ₹10 (With TXN ID)</a>
-    <a class="purple" href="upi://pay?pa=store@upi&pn=MyStore&cu=INR&tn=OpenAmount">UPI Pay (No Amount)</a>
+    <div class="group-label">
+      <h2>SMS</h2>
+      <span class="tag tag-amber">External</span>
+    </div>
+    <div class="card">
+      <a class="row" href="sms:81063&body=IQB%20Q08%20777212244%20Je%20veux%20des%20informations%20d%C3%A9taill%C3%A9es!">
+        <span class="dot dot-amber"></span>
+        <div class="row-text">
+          <div class="row-title">Send SMS</div>
+          <div class="row-sub">sms:81063&body=...</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+    </div>
   </div>
 
-  <h2>📞 Other Non-HTTP Schemes</h2>
+  <!-- UPI Payments -->
   <div class="group">
-    <a class="orange" href="tel:+1234567890">tel:+1234567890</a>
-    <a class="orange" href="mailto:test@example.com">mailto:test@example.com</a>
-    <a class="orange" href="maps://?q=New+York">maps://New York</a>
+    <div class="group-label">
+      <h2>UPI Payments</h2>
+      <span class="tag tag-violet">₹1.00</span>
+    </div>
+    <div class="card">
+      <a class="row" href="upi://pay?pa=test@ybl&pn=TestMerchant&am=1.00&cu=INR&tn=TestPayment">
+        <span class="dot dot-violet"></span>
+        <div class="row-text">
+          <div class="row-title">UPI Generic</div>
+          <div class="row-sub">upi://pay?pa=test@ybl</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="row" href="gpay://upi/pay?pa=test@ybl&pn=TestMerchant&am=1.00&cu=INR&tn=TestPayment">
+        <span class="dot dot-blue"></span>
+        <div class="row-text">
+          <div class="row-title">Google Pay</div>
+          <div class="row-sub">gpay://upi/pay?pa=test@ybl</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="row" href="phonepe://pay?pa=test@ybl&pn=TestMerchant&am=1.00&cu=INR&tn=TestPayment">
+        <span class="dot dot-purple"></span>
+        <div class="row-text">
+          <div class="row-title">PhonePe</div>
+          <div class="row-sub">phonepe://pay?pa=test@ybl</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="row" href="paytmmp://pay?pa=test@ybl&pn=TestMerchant&am=1.00&cu=INR&tn=TestPayment">
+        <span class="dot dot-cyan"></span>
+        <div class="row-text">
+          <div class="row-title">Paytm</div>
+          <div class="row-sub">paytmmp://pay?pa=test@ybl</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+    </div>
   </div>
 
-  <h2>✅ HTTP/HTTPS (allowed, triggers onLoadSuccess)</h2>
+  <!-- Other Schemes -->
   <div class="group">
-    <a class="green" href="https://example.com">https://example.com</a>
-    <a class="blue"  href="http://example.com">http://example.com</a>
+    <div class="group-label">
+      <h2>Other Schemes</h2>
+      <span class="tag tag-amber">External</span>
+    </div>
+    <div class="card">
+      <a class="row" href="tel:+1234567890">
+        <span class="dot dot-amber"></span>
+        <div class="row-text">
+          <div class="row-title">Phone Call</div>
+          <div class="row-sub">tel:+1234567890</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="row" href="mailto:test@example.com">
+        <span class="dot dot-amber"></span>
+        <div class="row-text">
+          <div class="row-title">Email</div>
+          <div class="row-sub">mailto:test@example.com</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="row" href="maps://?q=New+York">
+        <span class="dot dot-amber"></span>
+        <div class="row-text">
+          <div class="row-title">Maps</div>
+          <div class="row-sub">maps://?q=New+York</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+    </div>
   </div>
+
+  <!-- HTTP -->
+  <div class="group">
+    <div class="group-label">
+      <h2>HTTP / HTTPS</h2>
+      <span class="tag tag-green">Allowed</span>
+    </div>
+    <div class="card">
+      <a class="row" href="https://example.com">
+        <span class="dot dot-green"></span>
+        <div class="row-text">
+          <div class="row-title">HTTPS</div>
+          <div class="row-sub">https://example.com</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="row" href="http://example.com">
+        <span class="dot dot-green"></span>
+        <div class="row-text">
+          <div class="row-title">HTTP</div>
+          <div class="row-sub">http://example.com</div>
+        </div>
+        <span class="chevron">›</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">Built for WebView testing</div>
+</div>
 
 </body>
 </html>
